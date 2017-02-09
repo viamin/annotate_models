@@ -8,6 +8,8 @@ task :annotate_routes => :environment do
   options[:position_in_routes] = Annotate.fallback(ENV['position_in_routes'], ENV['position'])
   options[:ignore_routes] = Annotate.fallback(ENV['ignore_routes'],  nil)
   options[:require] = ENV['require'] ? ENV['require'].split(',') : []
+  options[:wrapper_open] = ENV['wrapper_open'] ? ENV['wrapper_open'] : nil
+  options[:wrapper_close] = ENV['wrapper_close'] ? ENV['wrapper_close'] : nil
   AnnotateRoutes.do_annotations(options)
 end
 
