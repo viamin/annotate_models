@@ -54,7 +54,7 @@ module AnnotateRoutes
 
       out += routes_map[1..-1]
       out += [options[:route_wrapper_close]] if options[:route_wrapper_close]
-      out.map { |line| "# #{content(options[:format_markdown] ? line.split(' ') : line, maxs, options)}" }
+      out.map { |line| "# #{content(options[:format_markdown] ? line.split(' ') : line, maxs, options)}".rstrip }
     end
 
     def do_annotations(options = {})
