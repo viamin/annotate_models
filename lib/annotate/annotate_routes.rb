@@ -36,9 +36,10 @@ module AnnotateRoutes
     def header(options = {})
       routes_map = app_routes_map(options)
 
-      out = ["# #{options[:format_markdown] ? PREFIX_MD : PREFIX}" + (options[:timestamp] ? " (Updated #{Time.now.strftime('%Y-%m-%d %H:%M')})" : '')]
+      out = options[:route_wrapper_open] ? [options[:route_wrapper_open]] : []
+      out += ["# #{options[:format_markdown] ? PREFIX_MD : PREFIX}" + (options[:timestamp] ? " (Updated #{Time.now.strftime('%Y-%m-%d %H:%M')})" : '')]
       out += ['#']
-      return out if routes_map.size.zero?
+      return out.compact if routes_map.size.zero?
 
       maxs = [HEADER_ROW.map(&:size)] + routes_map[1..-1].map { |line| line.split.map(&:size) }
 
@@ -51,7 +52,9 @@ module AnnotateRoutes
         out += ["# #{content(routes_map[0], maxs, options)}"]
       end
 
-      out + routes_map[1..-1].map { |line| "# #{content(options[:format_markdown] ? line.split(' ') : line, maxs, options)}" }
+      out += routes_map[1..-1]
+      out += [options[:route_wrapper_close]] if options[:route_wrapper_close]
+      out.map { |line| "# #{content(options[:format_markdown] ? line.split(' ') : line, maxs, options)}" }
     end
 
     def do_annotations(options = {})
