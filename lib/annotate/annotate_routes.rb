@@ -36,8 +36,8 @@ module AnnotateRoutes
     def header(options = {})
       routes_map = app_routes_map(options)
 
-      out = options[:route_wrapper_open] ? [options[:route_wrapper_open]] : []
-      out += ["# #{options[:format_markdown] ? PREFIX_MD : PREFIX}" + (options[:timestamp] ? " (Updated #{Time.now.strftime('%Y-%m-%d %H:%M')})" : '')]
+      out = ["# #{options[:format_markdown] ? PREFIX_MD : PREFIX}" + (options[:timestamp] ? " (Updated #{Time.now.strftime('%Y-%m-%d %H:%M')})" : '')]
+      out += [options[:route_wrapper_open]] if options[:route_wrapper_open]
       out += ['#']
       return out.compact if routes_map.size.zero?
 
@@ -161,7 +161,7 @@ module AnnotateRoutes
         mode = :content
         next unless line == ''
       elsif mode == :content
-        if line =~ /^\s*#\s*== Route.*$/ || line =~ /\s*#{options[:route_wrapper_open]}.*$/
+        if line =~ /^\s*#\s*== Route.*$/
           header_found_at = line_number + 1 # index start's at 0
           mode = :header
         else
