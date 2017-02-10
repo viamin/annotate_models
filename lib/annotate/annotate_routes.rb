@@ -37,9 +37,9 @@ module AnnotateRoutes
       routes_map = app_routes_map(options)
 
       out = ["# #{options[:format_markdown] ? PREFIX_MD : PREFIX}" + (options[:timestamp] ? " (Updated #{Time.now.strftime('%Y-%m-%d %H:%M')})" : '')]
-      out += [options[:route_wrapper_open]] if options[:route_wrapper_open]
       out += ['#']
-      return out.compact if routes_map.size.zero?
+      out += [options[:route_wrapper_open]] if options[:route_wrapper_open]
+      return out if routes_map.size.zero?
 
       maxs = [HEADER_ROW.map(&:size)] + routes_map[1..-1].map { |line| line.split.map(&:size) }
 
