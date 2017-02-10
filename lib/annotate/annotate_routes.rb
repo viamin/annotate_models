@@ -52,7 +52,7 @@ module AnnotateRoutes
         out += ["# #{content(routes_map[0], maxs, options)}"]
       end
 
-      out += "# #{[options[:route_wrapper_close]]}" if options[:route_wrapper_close]
+      out += ["# #{[options[:route_wrapper_close]]}"] if options[:route_wrapper_close]
       out + routes_map[1..-1].map { |line| "# #{content(options[:format_markdown] ? line.split(' ') : line, maxs, options)}" }
     end
 
