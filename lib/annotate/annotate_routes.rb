@@ -161,7 +161,7 @@ module AnnotateRoutes
         mode = :content
         next unless line == ''
       elsif mode == :content
-        if line =~ /^\s*#\s*== Route.*$/
+        if line =~ /^\s*#\s*== Route.*$/ || line =~ /\s*#{options[:route_wrapper_open]}.*$/
           header_found_at = line_number + 1 # index start's at 0
           mode = :header
         else
