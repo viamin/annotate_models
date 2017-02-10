@@ -37,7 +37,7 @@ module AnnotateRoutes
       routes_map = app_routes_map(options)
 
       out = ["# #{options[:format_markdown] ? PREFIX_MD : PREFIX}" + (options[:timestamp] ? " (Updated #{Time.now.strftime('%Y-%m-%d %H:%M')})" : '')]
-      # out += ['#']
+      out += ['#']
       out += [options[:route_wrapper_open]] if options[:route_wrapper_open]
       return out if routes_map.size.zero?
 
