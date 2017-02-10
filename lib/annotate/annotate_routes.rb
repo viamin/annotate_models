@@ -37,7 +37,7 @@ module AnnotateRoutes
       routes_map = app_routes_map(options)
 
       out = ["# #{options[:format_markdown] ? PREFIX_MD : PREFIX}" + (options[:timestamp] ? " (Updated #{Time.now.strftime('%Y-%m-%d %H:%M')})" : '')]
-      out += ['#']
+      # out += ['#']
       out += [options[:route_wrapper_open]] if options[:route_wrapper_open]
       return out if routes_map.size.zero?
 
@@ -52,9 +52,8 @@ module AnnotateRoutes
         out += ["# #{content(routes_map[0], maxs, options)}"]
       end
 
-      out += routes_map[1..-1]
-      out += [options[:route_wrapper_close]] if options[:route_wrapper_close]
-      out.map { |line| "# #{content(options[:format_markdown] ? line.split(' ') : line, maxs, options)}".rstrip }
+      out += "# #{[options[:route_wrapper_close]]}" if options[:route_wrapper_close]
+      out + routes_map[1..-1].map { |line| "# #{content(options[:format_markdown] ? line.split(' ') : line, maxs, options)}" }
     end
 
     def do_annotations(options = {})
@@ -91,9 +90,7 @@ module AnnotateRoutes
 
     # Skip routes which match given regex
     # Note: it matches the complete line (route_name, path, controller/action)
-    if options[:ignore_routes]
-      routes_map.reject! { |line| line =~ /#{options[:ignore_routes]}/ }
-    end
+    routes_map.reject! { |line| line =~ /#{options[:ignore_routes]}/ } if options[:ignore_routes]
 
     routes_map
   end
