@@ -145,6 +145,18 @@ describe AnnotateRoutes do
       expect(@mock_file).to receive(:puts).with(/ActionController::Routing...\nfoo\n\n# == Route Map \(Updated \d{4}-\d{2}-\d{2} \d{2}:\d{2}\)\n#\n# another good line\n# good line\n/)
       AnnotateRoutes.do_annotations timestamp: true
     end
+
+    it 'should add a wrapper opening when :route_wrapper_open is passed' do
+      expect(File).to receive(:read).with(ROUTE_FILE).and_return("ActionController::Routing...\nfoo")
+      expect(@mock_file).to receive(:puts).with(/ActionController::Routing...\nfoo\n\n# == Route Map\n#\n# This is an open wrapper\n# another good line\n# good line\n/)
+      AnnotateRoutes.do_annotations route_wrapper_open: 'This is an open wrapper'
+    end
+
+    it 'should add a wrapper closing when :route_wrapper_close is passed' do
+      expect(File).to receive(:read).with(ROUTE_FILE).and_return("ActionController::Routing...\nfoo")
+      expect(@mock_file).to receive(:puts).with(/ActionController::Routing...\nfoo\n\n# == Route Map\n#\n# another good line\n# good line\n# This is a close wrapper\n/)
+      AnnotateRoutes.do_annotations route_wrapper_close: 'This is a close wrapper'
+    end
   end
 
   describe 'When removing' do
