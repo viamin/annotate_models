@@ -48,7 +48,7 @@ describe AnnotateRoutes do
       expect(@mock_file).to receive(:puts).with("
 # ## Route Map
 #
-# Prefix    | Verb       | URI Pattern     | Controller#Action   
+# Prefix    | Verb       | URI Pattern     | Controller#Action
 # --------- | ---------- | --------------- | --------------------
 # myaction1 | GET        | /url1(.:format) | mycontroller1#action
 # myaction2 | POST       | /url2(.:format) | mycontroller2#action
