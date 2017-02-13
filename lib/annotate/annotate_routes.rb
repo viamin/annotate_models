@@ -112,7 +112,7 @@ module AnnotateRoutes
 
     # Make sure we end on a trailing newline.
     new_content << '' unless new_content.last == ''
-    new_text = new_content.join("\n")
+    new_text = new_content.map(&:rstrip).join("\n")
 
     if existing_text == new_text
       puts "#{routes_file} unchanged."
