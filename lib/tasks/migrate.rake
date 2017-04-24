@@ -30,22 +30,22 @@ module Annotate
       unless @@working || Annotate.skip_on_migration?
         @@working = true
 
-        self.update_models if Annotate.include_models?
-        self.update_routes if Annotate.include_routes?
+        update_models if Annotate.include_models?
+        update_routes if Annotate.include_routes?
       end
     end
 
     def self.update_models
-      if Rake::Task.task_defined?("annotate_models")
-        Rake::Task["annotate_models"].invoke
-      elsif Rake::Task.task_defined?("app:annotate_models")
-        Rake::Task["app:annotate_models"].invoke
+      if Rake::Task.task_defined?('annotate_models')
+        Rake::Task['annotate_models'].invoke
+      elsif Rake::Task.task_defined?('app:annotate_models')
+        Rake::Task['app:annotate_models'].invoke
       end
     end
 
     def self.update_routes
-      if Rake::Task.task_defined?("annotate_routes")
-        Rake::Task["annotate_routes"].invoke
+      if Rake::Task.task_defined?('annotate_routes')
+        Rake::Task['annotate_routes'].invoke
       end
     end
   end
